@@ -23,10 +23,10 @@ fn main() {
         
       	match direction {
        		"L"=>{
-         		current_position = wrap_sub(current_position as u16, count_parsed); //issue if WRAP_MAX is > 127
+         		current_position = wrap_sub(current_position as u16, count_parsed);
          	},
          	"R"=>{
-          		current_position = wrap_add(current_position as u16, count_parsed); // issue if WRAP_MAX IS > 127
+          		current_position = wrap_add(current_position as u16, count_parsed);
           	},
            	_ => {
            		eprintln!("Cannot process instruction {}{}", direction, count);
@@ -47,8 +47,6 @@ fn main() {
 /* 
  * Add umbers, if it goes over 100, wrap it from 0 - eg 50 + 55 results in 5.
  * Note this doesnt is only ment to work for values between 0 and WRAP_MAX limit. 
- * This absolutely isn't safe and can go horribly wrong if the WRAP_MAX limit iS >= 127.
- * Make sure that the b value is not highher than WRAP_MAX before passing it to the function.
  * */
 fn wrap_add(a: u16, b: u16) -> u8 {
 	return ((a + b) % WRAP_MAX) as u8;
@@ -57,8 +55,6 @@ fn wrap_add(a: u16, b: u16) -> u8 {
 /* 
  * Subtract wrapping value if overflows 0 - eg 50 - 55 -> 95 
  * Note this is only ment to work for values between 0 and WRAP_MAX limit.
- * This absolutely isn't safe and can go horribly wrong if the WRAP_MAX limit iS >= 127.
- * Make sure that the b value is not highher than WRAP_MAX before passing it to the function.
  * */
 fn wrap_sub(a: u16, b: u16) -> u8 {
 	
