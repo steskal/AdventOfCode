@@ -23,14 +23,25 @@ fn main() {
 			}).collect()); //convert it to field of 0 and 1 where 1 represents a roll
 	}
 	
-	for y in 0..rows.len() { // go through all rolls
-		for x in 0..rows.get(y).unwrap().len() {
-			if rows[y][x] != 1 {
-				continue;	//only rolls, don't check for empty spaces.
+	loop {
+		let mut found_in_loop = 0;
+		
+		for y in 0..rows.len() { // go through all rolls
+			for x in 0..rows.get(y).unwrap().len() {
+				if rows[y][x] != 1 {
+					continue;	//only rolls, don't check for empty spaces.
+				}
+				if is_accessible(&rows, x, y) {
+					accessible_1	+= 1;
+					found_in_loop	+= 1; // for part two I need to count if any rolls were accessible in each round - true/false flag would also do.
+					
+					rows[y][x]		 = 0; // Part two: accessible rolls are removed
+				}
 			}
-			if is_accessible(&rows, x, y) {
-				accessible_1 += 1;
-			}
+		}
+		
+		if found_in_loop == 0 { // If there were no removed/accessible rolls in the last round, exit the loop
+			break;
 		}
 	}
 	
